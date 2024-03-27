@@ -31,18 +31,22 @@ public class LoginController {
     // Task 7
     @PostMapping(path = "/")
     public ModelAndView processlogin(HttpSession sess, @ModelAttribute @Valid Login login, BindingResult bindings) {
-        ModelAndView mav = new ModelAndView();
+        ModelAndView mav = new ModelAndView("view0");
+        mav.addObject("login", login);
+
         // check for today only, since Spring validation doesn't capture this
-        Date birthday = login.getBirthDate();
-        if (isToday(birthday)) {
-            ObjectError error = new ObjectError("globalError", "Birthday cannot be a current or future date");
-            bindings.addError(error);
+        if (login.getBirthDate() != null) { // if null, skip to regular object validation below
+            Date birthday = login.getBirthDate();
+            if (isToday(birthday)) {
+                ObjectError error = new ObjectError("globalError", "Birthday cannot be a current or future date");
+                bindings.addError(error);
+            }
         }
+
         if (bindings.hasErrors()) {
-            mav.setViewName("view0");
-            mav.addObject("login", login);
             return mav;
         }
+
         // successful login
         sess.setAttribute("login", login);
         mav.setViewName("view1");

@@ -16,7 +16,7 @@ public class Login {
     @Pattern(regexp = "^(.+)@(.+)$", message = "Invalid email format")
     private String email;
 
-    @NotNull // implementing NotNull to ensure birthdate is available for age calc
+    @NotNull(message = "Birthday cannot be blank") // implementing NotNull to ensure birthdate is available for age calc
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past(message = "Birthday cannot be a current or future date")
     private Date birthDate;
