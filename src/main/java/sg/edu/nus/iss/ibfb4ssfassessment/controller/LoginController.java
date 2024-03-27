@@ -19,7 +19,7 @@ public class LoginController {
 
 
     // Task 6
-    @GetMapping(path = {"/","/login"})
+    @GetMapping(path = "/")
     public ModelAndView login(HttpSession sess) {
         ModelAndView mav = new ModelAndView("view0");
         mav.addObject("login", new Login());
@@ -27,7 +27,7 @@ public class LoginController {
     }
 
     // Task 7
-    @PostMapping(path = {"/","/login"})
+    @PostMapping(path = "/")
     public ModelAndView processlogin(HttpSession sess, @ModelAttribute @Valid Login login, BindingResult bindings) {
         ModelAndView mav = new ModelAndView();
         if (bindings.hasErrors()) {
@@ -40,6 +40,7 @@ public class LoginController {
         mav.setViewName("view1");
         return mav;
     }
+
     
 
     // For the logout button shown on View 2

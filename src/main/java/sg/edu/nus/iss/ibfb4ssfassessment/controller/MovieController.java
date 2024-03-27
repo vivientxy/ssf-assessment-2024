@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -15,8 +15,11 @@ public class MovieController {
 
 
     // TODO: Task 8
-    public String displayMovies() {
+    @GetMapping(path = "/movies")
+    public ModelAndView displayMovies() {
+        ModelAndView mav = new ModelAndView();
 
+        return mav;
     }
 
     // TODO: Task 9
