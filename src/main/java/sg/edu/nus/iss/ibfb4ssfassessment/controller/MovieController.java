@@ -45,8 +45,7 @@ public class MovieController {
         Login user = (Login)sess.getAttribute("login");
         Date birthDate = user.getBirthDate();
         int age = getAge(birthDate);
-        System.out.println(">>> age: " + age);
-
+        
         Movie movie = dbService.getMovieById(movieId);
         int ageRequired = 0;
         switch (movie.getRated()) {

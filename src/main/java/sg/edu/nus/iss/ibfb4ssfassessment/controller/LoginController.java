@@ -35,7 +35,6 @@ public class LoginController {
         // successful login
         sess.setAttribute("login", login);
         mav.setViewName("view1");
-        System.out.println(">>>login attribute saved: " + login);
         return mav;
     }
 
