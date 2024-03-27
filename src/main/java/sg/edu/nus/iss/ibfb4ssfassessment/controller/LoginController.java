@@ -1,7 +1,6 @@
 package sg.edu.nus.iss.ibfb4ssfassessment.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import jakarta.servlet.http.HttpSession;
@@ -15,8 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
-    
-
 
     // Task 6
     @GetMapping(path = "/")
@@ -38,15 +35,16 @@ public class LoginController {
         // successful login
         sess.setAttribute("login", login);
         mav.setViewName("view1");
+        System.out.println(">>>login attribute saved: " + login);
         return mav;
     }
 
-    
-
     // For the logout button shown on View 2
     // On logout, session should be cleared
-    public String logout() {
-
+    @GetMapping(path = "/logout")
+    public String logout(HttpSession sess) {
+        sess.invalidate();
+        return "redirect:/";
     }
     
 }
