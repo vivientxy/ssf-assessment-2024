@@ -27,16 +27,15 @@
 
       <div class="mb-3">
         <label class="form-label">Date Of Birth</label>
-        <input
-          type="date"
-          class="form-control"
-          th:field="*{birthDate}"
-        />
+        <input type="date" class="form-control" th:field="*{birthDate}" />
         <div
           th:errors="*{birthDate}"
           class="form-text"
           style="color: red"
         ></div>
+        <div class="form-text" th:each="err : ${#fields.errors('global')}">
+          <span style="color: red" th:text="${err}"></span>
+        </div>
       </div>
 
       <div><button type="submit" class="btn btn-primary">Submit</button></div>

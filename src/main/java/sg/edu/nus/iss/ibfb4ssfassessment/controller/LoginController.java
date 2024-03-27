@@ -1,7 +1,12 @@
 package sg.edu.nus.iss.ibfb4ssfassessment.controller;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -27,6 +32,12 @@ public class LoginController {
     @PostMapping(path = "/")
     public ModelAndView processlogin(HttpSession sess, @ModelAttribute @Valid Login login, BindingResult bindings) {
         ModelAndView mav = new ModelAndView();
+        // check for today only, since Spring validation doesn't capture this
+        Date birthday = login.getBirthDate();
+        if (isToday(birthday)) {
+            ObjectError error = new ObjectError("globalError", "Birthday cannot be a current or future date");
+            bindings.addError(error);
+        }
         if (bindings.hasErrors()) {
             mav.setViewName("view0");
             mav.addObject("login", login);
@@ -45,5 +56,21 @@ public class LoginController {
         sess.invalidate();
         return "redirect:/";
     }
-    
+
+    private Boolean isToday(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd");
+        int day1 = Integer.parseInt(sdf.format(date));
+        sdf.applyPattern("MM");
+        int month1 = Integer.parseInt(sdf.format(date));
+        sdf.applyPattern("yyyy");
+        int year1 = Integer.parseInt(sdf.format(date));
+        LocalDate today = LocalDate.now();
+        int day2 = today.getDayOfMonth();
+        int month2 = today.getMonthValue();
+        int year2 = today.getYear();
+        return (day1 == day2)
+                && (month1 == month2)
+                && (year1 == year2);
+    }
+
 }
